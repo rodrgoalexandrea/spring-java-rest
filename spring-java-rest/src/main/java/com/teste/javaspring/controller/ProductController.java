@@ -2,6 +2,7 @@ package com.teste.javaspring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,14 +16,22 @@ import com.teste.javaspring.util.ProductSearchFilter;
 @RestController()
 @RequestMapping(value = "/product")
 public class ProductController {
-	
+
 	@Autowired
 	ProductService productService;
-	
+
 	@PostMapping("/find")
 	public @ResponseBody Page<Product> findProduct(@RequestBody ProductSearchFilter productSearchFilter) {
+
 		Page<Product> pages = productService.findByFilter(productSearchFilter);
+
 		return pages;
+	}
+
+	@DeleteMapping("reinitialize")
+	public void reinitializeDataBase() {
+		productService.deleteAll();
+		productService.initDataBase();
 
 	}
 

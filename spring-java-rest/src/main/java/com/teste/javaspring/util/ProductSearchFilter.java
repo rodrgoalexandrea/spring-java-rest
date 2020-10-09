@@ -8,15 +8,15 @@ public class ProductSearchFilter {
 
 	private String name;
 
+	private BigDecimal initialPrice;
+
+	private BigDecimal finalPrice;
+
 	private ProductSearchType productSearchType;
 
 	private int pageSize;
 
 	private int pageNumber;
-	
-	private BigDecimal initialPrice;
-
-	private BigDecimal finalPrice;
 
 	public String getName() {
 		return name;
@@ -24,6 +24,22 @@ public class ProductSearchFilter {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public BigDecimal getInitialPrice() {
+		return initialPrice;
+	}
+
+	public void setInitialPrice(BigDecimal initialPrice) {
+		this.initialPrice = initialPrice;
+	}
+
+	public BigDecimal getFinalPrice() {
+		return finalPrice;
+	}
+
+	public void setFinalPrice(BigDecimal finalPrice) {
+		this.finalPrice = finalPrice;
 	}
 
 	public ProductSearchType getProductSearchType() {
@@ -48,22 +64,6 @@ public class ProductSearchFilter {
 
 	public void setPageNumber(int pageNumber) {
 		this.pageNumber = pageNumber;
-	}
-
-	public BigDecimal getInitialPrice() {
-		return initialPrice;
-	}
-
-	public void setInitialPrice(BigDecimal initialPrice) {
-		this.initialPrice = initialPrice;
-	}
-
-	public BigDecimal getFinalPrice() {
-		return finalPrice;
-	}
-
-	public void setFinalPrice(BigDecimal finalPrice) {
-		this.finalPrice = finalPrice;
 	}
 
 }

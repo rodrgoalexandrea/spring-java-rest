@@ -22,30 +22,36 @@ import com.teste.javaspring.util.ProductSearchFilter;
 
 @Service
 public class ProductService {
+	
+	private static final String MSG_ILLEGAL_ARGUMENT = "Invalid search type";
 
 	@Autowired
-	private ProductRepository productRepository;
-	
+	ProductRepository productRepository;
+
 	public Page<Product> findByFilter(ProductSearchFilter productSearchFilter) {
+
 		Pageable pageable = PageRequest.of(productSearchFilter.getPageNumber(), productSearchFilter.getPageSize());
-		
+
 		if (ProductSearchType.NAME.equals(productSearchFilter.getProductSearchType())) {
 			return productRepository.findByName(productSearchFilter.getName(), pageable);
 
 		} else if (ProductSearchType.PRICE_RANGE.equals(productSearchFilter.getProductSearchType())) {
 			return productRepository.findByPriceRange(productSearchFilter.getInitialPrice(),
 					productSearchFilter.getFinalPrice(), pageable);
-			
+
 		}
 
-		throw new IllegalArgumentException("Invalid search type");
+		throw new IllegalArgumentException(MSG_ILLEGAL_ARGUMENT);
 	}
-	
-	
-	
+
+	public void deleteAll() {
+		productRepository.deleteAll();
+	}
+
 	public void initDataBase() {
 
-		List<String> files = Arrays.asList("/json/data_2.json");
+		List<String> files = Arrays.asList("/json/data_1.json", "/json/data_2.json", "/json/data_3.json",
+				"/json/data_4.json");
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		TypeReference<WrapperProduct> typeReference = new TypeReference<WrapperProduct>() {
@@ -66,7 +72,7 @@ public class ProductService {
 				try {
 					inputStream.close();
 				} catch (IOException e) {
-					// TODO: handle exception
+					e.printStackTrace();
 				}
 
 			}
@@ -75,6 +81,4 @@ public class ProductService {
 
 	}
 
-	
-	
 }
