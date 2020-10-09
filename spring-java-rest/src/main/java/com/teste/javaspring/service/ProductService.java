@@ -22,7 +22,7 @@ import com.teste.javaspring.util.ProductSearchFilter;
 
 @Service
 public class ProductService {
-	
+
 	private static final String MSG_ILLEGAL_ARGUMENT = "Invalid search type";
 
 	@Autowired
@@ -38,9 +38,7 @@ public class ProductService {
 		} else if (ProductSearchType.PRICE_RANGE.equals(productSearchFilter.getProductSearchType())) {
 			return productRepository.findByPriceRange(productSearchFilter.getInitialPrice(),
 					productSearchFilter.getFinalPrice(), pageable);
-
 		}
-
 		throw new IllegalArgumentException(MSG_ILLEGAL_ARGUMENT);
 	}
 
