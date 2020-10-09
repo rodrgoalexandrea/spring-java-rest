@@ -5,7 +5,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Product {
-	
+
 	@Id
 	private String product;
 
@@ -66,5 +66,6 @@ public class Product {
 	public void setPrice(String price) {
 		this.price = price;
 	}
+
 
 }

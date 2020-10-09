@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -14,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teste.javaspring.model.Product;
 import com.teste.javaspring.model.WrapperProduct;
 import com.teste.javaspring.repository.ProductRepository;
+import com.teste.javaspring.util.ProductSearchFilter;
 
 @Service
 public class ProductService {
@@ -21,18 +25,14 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 	
-	public void saveAll(WrapperProduct product) {
-		productRepository.saveAll(product.getData());
-	}
-	
-	public List<Product> findAll(){
-		return productRepository.findAll();
+	public Page<Product> findByFilter(ProductSearchFilter productSearchFilter) {
+		Pageable pageable = PageRequest.of(productSearchFilter.getPageNumber(), productSearchFilter.getPageSize());
+		return productRepository.findByName(productSearchFilter.getName(), pageable);
 	}
 	
 	public void initDataBase() {
 
-		List<String> files = Arrays.asList("/json/data_1.json", "/json/data_2.json", "/json/data_3.json",
-				"/json/data_4.json");
+		List<String> files = Arrays.asList("/json/data_2.json");
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		TypeReference<WrapperProduct> typeReference = new TypeReference<WrapperProduct>() {
