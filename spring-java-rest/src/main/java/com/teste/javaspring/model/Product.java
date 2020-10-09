@@ -1,7 +1,12 @@
 package com.teste.javaspring.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.teste.javaspring.util.PriceDeserializer;
 
 @Entity
 public class Product {
@@ -17,7 +22,8 @@ public class Product {
 
 	private String origin;
 
-	private String price;
+	@JsonDeserialize(using = PriceDeserializer.class)
+	private BigDecimal price;
 
 	public String getProduct() {
 		return product;
@@ -59,13 +65,12 @@ public class Product {
 		this.origin = origin;
 	}
 
-	public String getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
-
 
 }

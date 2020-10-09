@@ -1,5 +1,7 @@
 package com.teste.javaspring.util;
 
+import java.math.BigDecimal;
+
 import com.teste.javaspring.enums.ProductSearchType;
 
 public class ProductSearchFilter {
@@ -11,6 +13,10 @@ public class ProductSearchFilter {
 	private int pageSize;
 
 	private int pageNumber;
+	
+	private BigDecimal initialPrice;
+
+	private BigDecimal finalPrice;
 
 	public String getName() {
 		return name;
@@ -42,6 +48,22 @@ public class ProductSearchFilter {
 
 	public void setPageNumber(int pageNumber) {
 		this.pageNumber = pageNumber;
+	}
+
+	public BigDecimal getInitialPrice() {
+		return initialPrice;
+	}
+
+	public void setInitialPrice(BigDecimal initialPrice) {
+		this.initialPrice = initialPrice;
+	}
+
+	public BigDecimal getFinalPrice() {
+		return finalPrice;
+	}
+
+	public void setFinalPrice(BigDecimal finalPrice) {
+		this.finalPrice = finalPrice;
 	}
 
 }

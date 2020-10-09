@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.teste.javaspring.enums.ProductSearchType;
 import com.teste.javaspring.model.Product;
 import com.teste.javaspring.model.WrapperProduct;
 import com.teste.javaspring.repository.ProductRepository;
@@ -27,8 +28,20 @@ public class ProductService {
 	
 	public Page<Product> findByFilter(ProductSearchFilter productSearchFilter) {
 		Pageable pageable = PageRequest.of(productSearchFilter.getPageNumber(), productSearchFilter.getPageSize());
-		return productRepository.findByName(productSearchFilter.getName(), pageable);
+		
+		if (ProductSearchType.NAME.equals(productSearchFilter.getProductSearchType())) {
+			return productRepository.findByName(productSearchFilter.getName(), pageable);
+
+		} else if (ProductSearchType.PRICE_RANGE.equals(productSearchFilter.getProductSearchType())) {
+			return productRepository.findByPriceRange(productSearchFilter.getInitialPrice(),
+					productSearchFilter.getFinalPrice(), pageable);
+			
+		}
+
+		throw new IllegalArgumentException("Invalid search type");
 	}
+	
+	
 	
 	public void initDataBase() {
 
