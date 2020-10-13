@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -29,31 +30,38 @@ public class ProductService {
 	ProductRepository productRepository;
 
 	public Page<Product> findByFilter(ProductSearchFilter productSearchFilter) {
-
-		Pageable pageable = PageRequest.of(productSearchFilter.getPageNumber(), productSearchFilter.getPageSize());
-
-		if (ProductSearchType.NAME.equals(productSearchFilter.getProductSearchType())) {
-			return productRepository.findByName(productSearchFilter.getName(), pageable);
-
-		} else if (ProductSearchType.PRICE_RANGE.equals(productSearchFilter.getProductSearchType())) {
-			return productRepository.findByPriceRange(productSearchFilter.getInitialPrice(),
-					productSearchFilter.getFinalPrice(), pageable);
+		try {
+		
+			Pageable pageable = PageRequest.of(productSearchFilter.getPageNumber(), productSearchFilter.getPageSize(), Sort.Direction.ASC, "product");
+			
+			if (ProductSearchType.NAME.equals(productSearchFilter.getProductSearchType())) {
+				return productRepository.findByName(productSearchFilter.getName(), pageable);
+	
+			} else if (ProductSearchType.PRICE_RANGE.equals(productSearchFilter.getProductSearchType())) {
+				return productRepository.findByPriceRange(productSearchFilter.getInitialPrice(),
+						productSearchFilter.getFinalPrice(), pageable);
+			}
+			
+		} catch (Exception e) {
+			throw e;
 		}
 		throw new IllegalArgumentException(MSG_ILLEGAL_ARGUMENT);
 	}
 
 	public void deleteAll() {
-		productRepository.deleteAll();
+		try {
+			productRepository.deleteAll();
+		} catch (Exception e) {
+			throw e;
+		}
 	}
-
+	
 	public void initDataBase() {
-
 		List<String> files = Arrays.asList("/json/data_1.json", "/json/data_2.json", "/json/data_3.json",
 				"/json/data_4.json");
 
 		ObjectMapper objectMapper = new ObjectMapper();
-		TypeReference<WrapperProduct> typeReference = new TypeReference<WrapperProduct>() {
-		};
+		TypeReference<WrapperProduct> typeReference = new TypeReference<WrapperProduct>() {};
 
 		files.forEach(file -> {
 			InputStream inputStream = null;
@@ -61,9 +69,8 @@ public class ProductService {
 				inputStream = TypeReference.class.getResourceAsStream(file);
 				WrapperProduct product = objectMapper.readValue(inputStream, typeReference);
 				List<Product> products = product.getData().parallelStream().distinct().collect(Collectors.toList());
-
 				productRepository.saveAll(products);
-
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
@@ -76,7 +83,7 @@ public class ProductService {
 			}
 
 		});
-
+		
 	}
 
 }

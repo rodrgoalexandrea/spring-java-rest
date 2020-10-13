@@ -17,7 +17,7 @@ public class ProductSearchFilter {
 	private int pageSize;
 
 	private int pageNumber;
-
+	
 	public String getName() {
 		return name;
 	}
@@ -66,4 +66,5 @@ public class ProductSearchFilter {
 		this.pageNumber = pageNumber;
 	}
 
+	
 }

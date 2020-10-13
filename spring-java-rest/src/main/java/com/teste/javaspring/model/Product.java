@@ -1,6 +1,7 @@
 package com.teste.javaspring.model;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -73,4 +74,27 @@ public class Product {
 		this.price = price;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+
+		if (o == null)
+			return false;
+
+		if (!(o instanceof Product))
+			return false;
+
+		Product product = (Product) o;
+
+		if (Objects.equals(this.product, product.getProduct()) && Objects.equals(this.quantity, product.getQuantity())
+				&& Objects.equals(this.type, product.type) && Objects.equals(this.origin, product.origin)
+				&& Objects.equals(this.price, product.price)) {
+
+			return true;
+
+		}
+
+		return super.equals(o);
+	}
 }
