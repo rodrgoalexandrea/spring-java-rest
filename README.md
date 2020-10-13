@@ -13,6 +13,8 @@ Pesquis por range de preço
     "pageSize":10
 }
 
+
+
 pesquisa pelo nome do produto
 {
     "name":"UTX",
@@ -20,6 +22,9 @@ pesquisa pelo nome do produto
     "pageNumber":0,
     "pageSize":10
 }
+
+
+
 
 
 URL´s
