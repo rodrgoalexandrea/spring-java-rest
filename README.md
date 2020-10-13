@@ -1,7 +1,7 @@
 # spring-java-rest
 
 Dentro da pasta raiz do projeto executar o seguinte comando:
-	mvnwn spring-boot:run
+	mvnw spring-boot:run
 
 Para realização dos testes deve ser passado json nos seguinted formatos:
 Pesquis por range de preço
