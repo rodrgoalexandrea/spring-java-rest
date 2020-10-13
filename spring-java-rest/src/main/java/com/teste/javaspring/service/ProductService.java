@@ -59,10 +59,12 @@ public class ProductService {
 	public void initDataBase() {
 		List<String> files = Arrays.asList("/json/data_1.json", "/json/data_2.json", "/json/data_3.json",
 				"/json/data_4.json");
-
+		
 		ObjectMapper objectMapper = new ObjectMapper();
 		TypeReference<WrapperProduct> typeReference = new TypeReference<WrapperProduct>() {};
 
+		
+		
 		files.forEach(file -> {
 			InputStream inputStream = null;
 			try {

@@ -1,26 +1,32 @@
 package com.teste.javaspring.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.teste.javaspring.util.PriceDeserializer;
 
 @Entity
-public class Product {
+@IdClass(Product.class)
+public class Product implements Serializable{
+
+	private static final long serialVersionUID = 6135898803321036745L;
 
 	@Id
 	private String product;
 
+	@Id
 	private Integer quantity;
-
+	@Id
 	private String type;
 
 	private String industry;
-
+	@Id
 	private String origin;
 
 	@JsonDeserialize(using = PriceDeserializer.class)
